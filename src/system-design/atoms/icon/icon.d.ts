@@ -1,0 +1,1 @@
+export type IconName = "archive" | "arrow-left" | "checkmark" | "chevron-right" | "clock" | "cross" | "delete" | "font-monospace" | "font-sans-serif" | "font-serif" | "font" | "google" | "hide-password" | "home" | "info" | "lock" | "logout" | "menu" | "moon" | "plus" | "restore" | "search" | "settings" | "show-password" | "status" | "sun" | "system-theme" | "tag";
