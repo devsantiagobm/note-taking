@@ -1,3 +1,5 @@
 .icon{
-    color: var(--neutral-950);
+    display: grid;
+    place-items: center;
+    transition: color .2s ease;
 }

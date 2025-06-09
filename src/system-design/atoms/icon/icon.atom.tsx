@@ -1,14 +1,17 @@
-import "./icon.atom.scss"
-import { IconName } from "./icon";
+import { HTMLProps } from "react";
+import "./icon.atom.scss";
+import { IconType } from "react-icons";
 
-interface Props{
-    name: IconName;
-    size?: number
-    alt?: string
+interface Props extends HTMLProps<"div"> {
+  icon: IconType
+  size?: number;
+  color?: string
 }
 
-export function Icon({name, size = 16, alt = "Icon"}: Props) {
-    return (
-        <img className="icon" src={`/icons/icon-${name}.svg`} width={size} height={16} alt={alt}></img>
-    )
+export function Icon({ icon: IconComponent, size = 16, color, className }: Props) {
+  return (
+    <div className={`icon ${className ?? ""}`}>
+      <IconComponent size={size} color={color} />
+    </div>
+  );
 }
