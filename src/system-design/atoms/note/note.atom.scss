@@ -1,0 +1,49 @@
+.note {
+    padding: 12px;
+    border-radius: 8px;
+    transition: background-color .15s ease;
+    cursor: pointer;
+    position: relative;
+
+    
+    @media (hover:hover) {
+        &:hover {
+            background-color: var(--neutral-100);
+        }
+    }
+
+    &::before{
+        content: "";
+        position: absolute;
+        width: calc(100% - 12px);
+        height: 1px;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: var(--neutral-100);
+    }
+
+
+    &__title {
+        font-size: 1rem;
+        margin: 0 0 12px;
+    }
+
+    &__tags {
+        display: flex;
+        gap: 4px;
+        margin: 0 0 8px;
+    }
+
+    &__tag {
+        padding: 3px 6px;
+        background-color: var(--neutral-200);
+        font-size: .7rem;
+        border-radius: 4px;
+    }
+
+    &__date{
+        font-size: .7rem;
+        color: var(--neutral-500);
+    }
+}

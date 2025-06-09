@@ -1,5 +1,76 @@
-.navbar{
-    grid-area: "navbar";
+.navbar {
+    flex-shrink: 0;
+    grid-area: navbar;
     background-color: var(--neutral-0);
     border-right: 1px solid var(--neutral-200);
+    padding: 1.5rem;
+
+    &__picture {
+        margin: 0 0 24px;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        &--tags {
+            gap: 8px;
+
+        }
+    }
+
+    &__link {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: transparent;
+        border-radius: 6px;
+        padding: 10px 12px;
+        transition: background-color .15s ease, color .15s ease;
+        font-size: .9rem;
+        position: relative;
+
+        &--active {
+            background-color: var(--neutral-100);
+        }
+
+        &--active &-arrow{
+            opacity: 1;
+            transform: translateY(-50%) translateX(2px);
+        }
+
+        &--active &-icon{
+            color: var(--blue-500);
+        }
+        @media (hover: hover) {
+            &:hover {
+                background-color: var(--neutral-100);
+            }
+
+            &:hover &-arrow {
+                opacity: 1;
+                transform: translateY(-50%) translateX(2px);
+            }
+        }
+
+    }
+
+
+
+
+    &__link-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 12px;
+        opacity: 0;
+        transition: opacity .2s ease, transform .2s ease;
+    }
+
+    &__tag-title {
+        font-size: .9rem;
+        margin: 0 0 10px;
+        color: var(--neutral-400);
+    }
 }

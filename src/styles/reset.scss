@@ -81,7 +81,14 @@ textarea {
     font-family: inherit;
     font-size: 100%;
     line-height: 1.15;
-    margin: 0
+    margin: 0;
+}
+
+textarea {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: inherit;
 }
 
 button,
@@ -220,4 +227,12 @@ span {
 
 li {
     list-style: none;
+}
+
+picture {
+    display: block;
+}
+
+label {
+    display: block;
 }
