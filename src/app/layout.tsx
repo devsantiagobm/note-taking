@@ -4,7 +4,7 @@ import { Inter, Noto_Serif, Source_Code_Pro } from "next/font/google";
 import "@/styles/reset.scss";
 import "@/styles/globals.scss";
 
-import { FontsProvider, ThemeProvider } from "@/providers";
+import { FontsProvider, ReduxProvider, ThemeProvider } from "@/providers";
 import { Header, Navbar } from "@/components";
 
 const inter = Inter({
@@ -30,19 +30,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
     return (
-        <html lang="en">
+        <html lang="en" >
             <body className={`${inter.variable} ${noto_serif.variable} ${source_code_pro.variable}`}>
-                <FontsProvider>
-                    <ThemeProvider>
-                        <div className="layout">
-                            <Navbar />
-                            <main className="main">
-                                <Header />
-                                {children}
-                            </main>
-                        </div>
-                    </ThemeProvider>
-                </FontsProvider>
+                <ReduxProvider>
+                    <FontsProvider>
+                        <ThemeProvider>
+                            <div className="layout">
+                                <Navbar />
+                                <main className="main">
+                                    <Header />
+                                    {children}
+                                </main>
+                            </div>
+                        </ThemeProvider>
+                    </FontsProvider>
+                </ReduxProvider>
             </body>
         </html>
     );

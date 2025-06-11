@@ -25,6 +25,9 @@
 
         &:focus {
             background-color: var(--neutral-200);
+        }
+
+        &:focus:not(&--error) {
             outline: solid 1px var(--neutral-300);
         }
 
@@ -35,7 +38,7 @@
             color: var(--neutral-600);
 
             &::placeholder {
-                font-size: .9rem;
+                font-size: .8rem;
             }
 
         }
@@ -49,7 +52,10 @@
             &::placeholder {
                 font-size: 1rem;
             }
+        }
 
+        &--error {
+            outline-color: var(--red-500);
         }
     }
 
@@ -86,7 +92,7 @@
         margin-inline: auto;
     }
 
-    &__buttons{
+    &__buttons {
         display: flex;
         gap: 8px;
     }
