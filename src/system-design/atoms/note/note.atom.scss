@@ -1,9 +1,16 @@
+@use "src/styles/mixins/transition.scss" as *;
+
 .note {
     padding: 12px;
     border-radius: 8px;
     transition: background-color .15s ease;
     cursor: pointer;
     position: relative;
+    @include theme-transition();
+
+    &--active{
+        background-color: var(--neutral-100);
+    }
 
     
     @media (hover:hover) {
@@ -31,6 +38,7 @@
 
     &__tags {
         display: flex;
+        flex-wrap: wrap;
         gap: 4px;
         margin: 0 0 8px;
     }

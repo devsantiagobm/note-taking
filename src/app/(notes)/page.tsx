@@ -1,19 +1,33 @@
+"use client";
+
 import "@/styles/shared/notes.scss"
-import { Button } from "@/system-design/atoms";
-import { NoteActions, NoteDetail, NotesList } from "@/system-design/molecules";
+
+import { Button, Note } from "@/system-design/atoms";
+import { NoteActions, NoteDetail } from "@/system-design/molecules";
 import { FaPlus as NewIcon} from "react-icons/fa6";
+import { useDispatch, useSelector } from "react-redux";
+import { clearCurrentNote } from "./state/notes.slice";
+import { visibleNotesSelector } from "./state/notes.selector";
+
 
 export default function Notes() {
+    const visibleNotes = useSelector(visibleNotesSelector)
+    const dispatch = useDispatch()
+
     return (
         <main className="notes">
             <section className="notes__column-list">
                 
-                <Button variant="action" alignment="center">
+                <Button variant="action" alignment="center" onClick={() => dispatch(clearCurrentNote())}>
                     <NewIcon size={12}/>
                     <span>Create New Note</span>
                 </Button>
 
-                <NotesList />
+                {
+                    visibleNotes.map((note) => (
+                        <Note note={note} key={note.id} />
+                    ))
+                }
             </section>
 
             <section className="notes__column-note">

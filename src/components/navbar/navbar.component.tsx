@@ -45,7 +45,6 @@ export function Navbar() {
 
             <span className="navbar__tag-title">Tags</span>
             <ul className="navbar__list navbar__list--tags">
-                {/* TODO PONER ESTADO ACTIVO EN LOS LINKS */}
                 <li>
                     <Link className="navbar__link" href={"/"}>
                         <Icon icon={Tag} size={16} />
