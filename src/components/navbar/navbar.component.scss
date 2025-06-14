@@ -1,9 +1,14 @@
 .navbar {
     flex-shrink: 0;
     grid-area: navbar;
-    background-color: var(--neutral-0);
     border-right: 1px solid var(--neutral-200);
     padding: 1.5rem;
+    height: 100%;
+    max-height: 100dvh;
+    overflow-y: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, auto) 1fr;
 
     &__picture {
         margin: 0 0 24px;
@@ -13,6 +18,9 @@
         display: flex;
         flex-direction: column;
         gap: 6px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: var(--neutral-300) transparent;
 
         &--tags {
             gap: 8px;
@@ -21,6 +29,8 @@
     }
 
     &__link {
+        cursor: pointer;
+        width: 100%;
         display: flex;
         align-items: center;
         gap: 8px;
@@ -35,14 +45,15 @@
             background-color: var(--neutral-100);
         }
 
-        &--active &-arrow{
+        &--active &-arrow {
             opacity: 1;
             transform: translateY(-50%) translateX(2px);
         }
 
-        &--active &-icon{
+        &--active &-icon {
             color: var(--blue-500);
         }
+
         @media (hover: hover) {
             &:hover {
                 background-color: var(--neutral-100);
@@ -52,10 +63,20 @@
                 opacity: 1;
                 transform: translateY(-50%) translateX(2px);
             }
+
+            &--tags.navbar__link--active:hover {
+                background-color: var(--neutral-50);
+            }
         }
 
     }
 
+    &__link-text {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 
 
 

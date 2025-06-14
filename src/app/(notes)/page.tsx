@@ -1,6 +1,6 @@
 "use client";
 
-import "@/styles/shared/notes.scss"
+import "./notes.scss"
 
 import { Button, Note } from "@/system-design/atoms";
 import { NoteActions, NoteDetail } from "@/system-design/molecules";
@@ -22,6 +22,8 @@ export default function Notes() {
                     <NewIcon size={12}/>
                     <span>Create New Note</span>
                 </Button>
+
+                {/* // TODO MENSAJE DDE CUANDO NO HAY NOTAS */}
 
                 {
                     visibleNotes.map((note) => (

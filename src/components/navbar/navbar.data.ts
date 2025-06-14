@@ -1,14 +1,16 @@
 import { BiHomeAlt as HomeIcon } from "react-icons/bi";
 import { HiOutlineSaveAs as ArchivedIcon } from "react-icons/hi";
 import { IconType } from "react-icons"
+import { setArchivedFilter } from "@/app/(notes)/state/notes.slice";
 
 interface NavbarItem {
     name: string
-    path: string
-    icon: IconType
+    action: Function;
+    icon: IconType;
+    conditionToBeActive: boolean;
 }
 
 export const navbarData: NavbarItem[] = [
-    { name: "All Notes", path: "/", icon: HomeIcon },
-    { name: "Archived", path: "/archived", icon: ArchivedIcon },
+    { name: "All Notes", action: () => setArchivedFilter(false), icon: HomeIcon, conditionToBeActive: false },
+    { name: "Archived", action: () => setArchivedFilter(true), icon: ArchivedIcon, conditionToBeActive: true },
 ]

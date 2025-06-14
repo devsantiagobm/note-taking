@@ -2,16 +2,22 @@
 
 import "./navbar.component.scss"
 import Link from "next/link"
-import { usePathname } from 'next/navigation';
 
 
 import { LuTag as Tag } from "react-icons/lu";
-import { IoIosArrowForward as RightArrow} from "react-icons/io";
+import { IoIosArrowForward as RightArrow } from "react-icons/io";
 import { Divider, Icon } from "@/system-design/atoms";
 import { navbarData } from "./navbar.data";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/stores/notes.store";
+import { tagsSelector } from "@/app/(notes)/state/notes.selector";
+import { setTag } from "@/app/(notes)/state/notes.slice";
 
 export function Navbar() {
-    const pathname = usePathname()
+    const dispatch = useDispatch()
+    const filters = useSelector((store: RootState) => store.notes.filters)
+    const tags = useSelector(tagsSelector)
+
 
     return (
         <nav className="navbar">
@@ -21,18 +27,19 @@ export function Navbar() {
 
             <ul className="navbar__list">
                 {
-                    navbarData.map(({ name, path, icon }) => {
-                        const tabIsActive = pathname === path
+                    navbarData.map(({ name, action, icon, conditionToBeActive }) => {
+                        const tabIsActive = filters.archiveds === conditionToBeActive
+
                         return (
                             <li key={name}>
-                                <Link className={`navbar__link ${tabIsActive && "navbar__link--active"}`} href={path}>
-                                    <Icon icon={icon} size={16} className="navbar__link-icon"/>
+                                <button onClick={() => dispatch(action())} className={`navbar__link ${tabIsActive && "navbar__link--active"}`} >
+                                    <Icon icon={icon} size={16} className="navbar__link-icon" />
                                     <span>{name}</span>
 
                                     <div className="navbar__link-arrow">
-                                        <Icon icon={RightArrow} size={14}/>
+                                        <Icon icon={RightArrow} size={14} />
                                     </div>
-                                </Link>
+                                </button>
                             </li>
 
                         )
@@ -45,30 +52,19 @@ export function Navbar() {
 
             <span className="navbar__tag-title">Tags</span>
             <ul className="navbar__list navbar__list--tags">
-                <li>
-                    <Link className="navbar__link" href={"/"}>
-                        <Icon icon={Tag} size={16} />
-                        <span>Home</span>
-                    </Link>
-                </li>
-                <li>
-                    <Link className="navbar__link" href={"/"}>
-                        <Icon icon={Tag} size={16} />
-                        <span>Work</span>
-                    </Link>
-                </li>
-                <li>
-                    <Link className="navbar__link" href={"/"}>
-                        <Icon icon={Tag} size={16} />
-                        <span>School</span>
-                    </Link>
-                </li>
-                <li>
-                    <Link className="navbar__link" href={"/"}>
-                        <Icon icon={Tag} size={16} />
-                        <span>University</span>
-                    </Link>
-                </li>
+                {
+                    tags.map((tag) => {
+                        const isActive = filters.tag === tag && "navbar__link--active"
+                        return (
+                            <li key={tag}>
+                                <button className={`navbar__link navbar__link--tags ${isActive}`} onClick={() => dispatch(setTag(isActive ? null : tag))}>
+                                    <Icon icon={Tag} size={16} />
+                                    <span className="navbar__link-text">{tag}</span>
+                                </button>
+                            </li>
+                        )
+                    })
+                }
             </ul>
         </nav>
     )

@@ -21,6 +21,11 @@
         padding: 8px 12px;
         cursor: text;
         font-size: .8rem;
+        transition: border-color .15s ease;
+
+        &:focus-within{
+            border-color:var(--neutral-400);
+        }
     }
 
     &__input{
