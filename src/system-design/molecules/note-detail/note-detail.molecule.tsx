@@ -11,6 +11,9 @@ import { RootState } from "@/stores/notes.store";
 import { useSyncForm } from "./hooks/use-sync-form";
 import { Inputs } from "./types/inputs";
 import { isCreatingNoteSelector } from "@/app/(notes)/state/notes.selector";
+import { unixFormatter } from "@/utils/unix-formatter.util";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 
 export function NoteDetail() {
@@ -19,22 +22,33 @@ export function NoteDetail() {
     const isCreatingNote = useSelector(isCreatingNoteSelector)
     const { handleSubmit, register, formState: { errors }, reset, } = useForm<Inputs>()
     useSyncForm({ reset, selectedNote })
+    const lastEdited = unixFormatter(selectedNote?.lastEdited ? new Date(selectedNote.lastEdited) : null)
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
-        const tags = data.tags.split(",")
+        const tags = data.tags.split(",").map(tag => tag.trim()).filter(tag => tag !== "");
 
         if (isCreatingNote) {
-            dispatch(createNote({ ...data, tags }))
+            dispatch(createNote({ ...data, tags }));
+            toast.success("Note created successfully!");
         }
 
         if (!isCreatingNote && selectedNote) {
-            dispatch(updateNote({ ...data, tags, id: selectedNote.id }))
+            dispatch(updateNote({ ...data, tags, id: selectedNote.id }));
+            toast.success("Note updated successfully!");
         }
-
 
         dispatch(clearCurrentNote())
         reset()
+
     }
+
+    useEffect(() => {
+        console.log({ errors });
+        if (errors.tags && errors?.tags?.type !== "required") {
+            toast.error(errors.tags.message)
+        }
+    }, [errors.tags])
+
 
     return (
         <form className="note-detail" onSubmit={handleSubmit(onSubmit)}>
@@ -48,11 +62,28 @@ export function NoteDetail() {
                         <Icon icon={TagIcon} size={14} />
                         <span className="note-detail__label-text">Tags</span>
                     </label>
-                    {/* //TODO VALIDAR QUE NO SE PONGAN TAGS IGUALES, tambien validar espacios con .trim */}
-                    <input className={`note-detail__input note-detail__input--tags ${errors.tags && "note-detail__input--error"}`} type="text"
-                        placeholder="Add tags separated by commas (e.g. Work, Planning)" spellCheck="false"
-                        {...register("tags", { required: true, validate: (value) => value.length > 10 && "asdad" })}
+
+                    <input
+                        className={`note-detail__input note-detail__input--tags ${errors.tags && "note-detail__input--error"}`}
+                        type="text"
+                        placeholder="Add tags separated by commas (e.g. Work, Planning)"
+                        spellCheck="false"
+                        {...register("tags", {
+                            required: true,
+                            validate: (value) => {
+                                const rawTags = value.split(",").map(tag => tag.trim()).filter(tag => tag !== "");
+                                const uniqueTags = new Set(rawTags);
+
+                                if (rawTags.length === 0) return "Please enter at least one tag.";
+                                if (rawTags.length > 10) return "You can enter up to 10 tags.";
+                                if (uniqueTags.size !== rawTags.length) return "Tags must be unique.";
+                                if (rawTags.some(tag => tag.length > 20)) return "Each tag must be 20 characters or fewer.";
+
+                                return true;
+                            }
+                        })}
                     />
+
                 </li>
 
                 <li className="note-detail__row">
@@ -60,8 +91,7 @@ export function NoteDetail() {
                         <Icon icon={ClockIcon} size={14} />
                         <span className="note-detail__label-text">Last edited</span>
                     </label>
-
-                    <span className="note-detail__last-edited-value">29 Oct 2024</span>
+                    <span className="note-detail__last-edited-value">{lastEdited}</span>
                 </li>
             </ul>
 
