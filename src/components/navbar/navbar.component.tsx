@@ -1,8 +1,6 @@
 "use client";
 
 import "./navbar.component.scss"
-import Link from "next/link"
-
 
 import { LuTag as Tag } from "react-icons/lu";
 import { IoIosArrowForward as RightArrow } from "react-icons/io";
@@ -15,15 +13,17 @@ import { setTag } from "@/stores/notes/notes.slice";
 
 export function Navbar() {
     const dispatch = useDispatch()
-    const filters = useSelector((store: RootState) => store.notes.filters)
+    const { filters, theme } = useSelector((state: RootState) => ({
+        filters: state.notes.filters,
+        theme: state.settings.theme,
+    }));
     const tags = useSelector(tagsSelector)
 
 
     return (
         <nav className="navbar">
-            {/* // TODO AGREGAR UN LOGO BLANCO Y OTRO NEGRO ACA */}
             <picture className="navbar__picture">
-                <img src="/logos/logo.svg" alt="NotesTask Logo" />
+                <img src={`/logos/logo-${theme}.svg`} alt="NotesTask Logo" />
             </picture>
 
             <ul className="navbar__list">
