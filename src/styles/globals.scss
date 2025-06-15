@@ -1,3 +1,5 @@
+@use "src/styles/mixins/transition.scss" as *;
+
 :root {
     --blue-700: #2547D0;
     --blue-500: #335CFF;
@@ -65,6 +67,7 @@ html.font-source {
     display: grid;
     grid-template-columns: 1fr repeat(4, 1fr);
     grid-template-areas: "navbar main main main main";
+    @include theme-transition();
 }
 
 .main {

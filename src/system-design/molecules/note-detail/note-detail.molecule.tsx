@@ -14,7 +14,8 @@ import { isCreatingNoteSelector } from "@/stores/notes/notes.selector";
 import { unixFormatter } from "@/utils/unix-formatter.util";
 import { useEffect } from "react";
 import { toast } from "sonner";
-//TODO EL MENSAJE DE CANCELAR NO HACE NADA
+
+//TODO EL MENSAJE DE CANCELAR NO HACE NADA, ESCONDERLO CUANDO SE ESTÁ CREANDO 
 
 export function NoteDetail() {
     const dispatch = useDispatch()
@@ -43,7 +44,6 @@ export function NoteDetail() {
     }
 
     useEffect(() => {
-        console.log({ errors });
         if (errors.tags && errors?.tags?.type !== "required") {
             toast.error(errors.tags.message)
         }

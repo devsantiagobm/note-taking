@@ -57,7 +57,7 @@ export function Settings() {
                                     fontOptions.map(({ title, description, action, value }) => (
                                         <button className={`settings__option ${value === settings.font && "settings__option--active"}`} key={title} onClick={() => dispatch(action())} >
                                             <div className="settings__option-content">
-                                                <span className='settings__option-icon'>Aa</span>
+                                                <span className={`settings__option-icon settings__option-icon--${value}`}>Aa</span>
 
                                                 <div className="settings__option-texts">
                                                     <span className="settings__option-title">{title}</span>

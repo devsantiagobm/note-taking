@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 
 export type ThemeMode = "light" | "dark";
 export type FontFamily = "inter" | "noto" | "source";
@@ -8,11 +9,9 @@ interface SettingsState {
     font: FontFamily;
 }
 
-//TODO ESTADO INICIAL SACARLO DE COOKIES
-
 const initialState: SettingsState = {
-    theme: "dark",
-    font: "inter",
+    theme: (Cookies.get("theme") as ThemeMode) ?? "dark",
+    font: (Cookies.get("font") as FontFamily) ?? "inter",
 };
 
 const settingsSlice = createSlice({
@@ -22,13 +21,13 @@ const settingsSlice = createSlice({
         setTheme(state, action: PayloadAction<ThemeMode>) {
             state.theme = action.payload;
             document.documentElement.setAttribute("data-theme", state.theme);
-            localStorage.setItem("theme", state.theme);
+            Cookies.set("theme", state.theme, { expires: 365 });
         },
         setFont(state, action: PayloadAction<FontFamily>) {
             state.font = action.payload;
             document.documentElement.classList.remove("font-inter", "font-noto", "font-source");
             document.documentElement.classList.add(`font-${action.payload}`);
-            localStorage.setItem("font", state.font);
+            Cookies.set("font", state.font, { expires: 365 });
         },
         initSettings(state) {
             const savedTheme = localStorage.getItem("theme") as ThemeMode;

@@ -21,6 +21,7 @@ export function Navbar() {
 
     return (
         <nav className="navbar">
+            {/* // TODO AGREGAR UN LOGO BLANCO Y OTRO NEGRO ACA */}
             <picture className="navbar__picture">
                 <img src="/logos/logo.svg" alt="NotesTask Logo" />
             </picture>

@@ -127,6 +127,18 @@
             border: solid 1px var(--neutral-300);
             background-color: var(--neutral-50);
             @include theme-transition();
+
+            &--inter {
+                font-family: var(--font-inter);
+            }
+
+            &--noto {
+                font-family: var(--font-noto-serif);
+            }
+
+            &--source {
+                font-family: var(--font-source-code);
+            }
         }
 
         &-texts {
@@ -140,8 +152,9 @@
             text-align: left;
             font-size: .85rem;
         }
-
+        
         &-description {
+            text-align: left;
             font-size: .75rem;
             color: var(--neutral-600);
             @include theme-transition();

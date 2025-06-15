@@ -7,6 +7,7 @@ import "@/styles/globals.scss";
 import { ReduxProvider } from "@/providers";
 import { Header, Navbar } from "@/components";
 import { Toaster } from "sonner";
+import { cookies } from "next/headers";
 
 const inter = Inter({
     variable: "--font-inter",
@@ -30,10 +31,16 @@ export const metadata: Metadata = {
         icon: "/logos/favicon.svg"
     }
 };
-// TODO THEME Y FUENTE POR DEFECTO VARIANDO EN LA SELECCION
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
+
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
+    const cookieStore = await cookies();
+    const theme = cookieStore.get("theme")?.value || "dark";
+    const font = cookieStore.get("font")?.value || "inter";
+
+
     return (
-        <html lang="en" data-theme="dark" className={`${inter.variable} ${noto_serif.variable} ${source_code_pro.variable} font-inter`}>
+        <html lang="en" data-theme={theme}
+            className={`${inter.variable} ${noto_serif.variable} ${source_code_pro.variable} font-${font}`}>
             <body>
                 <ReduxProvider>
                     <div className="layout">
