@@ -1,6 +1,6 @@
 "use client";
 
-import { store } from "@/stores/notes.store";
+import { store } from "@/stores/store";
 import { ReactNode } from "react";
 import { Provider } from "react-redux";
 

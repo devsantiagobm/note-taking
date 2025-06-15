@@ -6,8 +6,8 @@ import { Button, Note } from "@/system-design/atoms";
 import { NoteActions, NoteDetail } from "@/system-design/molecules";
 import { FaPlus as NewIcon} from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
-import { clearCurrentNote } from "./state/notes.slice";
-import { visibleNotesSelector } from "./state/notes.selector";
+import { clearCurrentNote } from "@/stores/notes/notes.slice";
+import { visibleNotesSelector } from "@/stores/notes/notes.selector";
 
 
 export default function Notes() {

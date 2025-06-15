@@ -1,10 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { notesReducer } from "@/app/(notes)/state/notes.slice";
-import { notesMiddleware } from "@/app/(notes)/state/notes.middleware";
+import { notesReducer } from "@/stores/notes/notes.slice";
+import { settingsReducer } from "@/stores/settings/settings.slice";
+import { notesMiddleware } from "@/stores/notes/notes.middleware";
 
 export const store = configureStore({
     reducer: {
-        notes: notesReducer
+        notes: notesReducer, settings: settingsReducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(notesMiddleware)
     

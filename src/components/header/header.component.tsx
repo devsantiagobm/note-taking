@@ -1,13 +1,14 @@
 "use client";
 
-import { RootState } from "@/stores/notes.store";
+import { RootState } from "@/stores/store";
 import "./header.component.scss"
 
 import { Icon } from "@/system-design/atoms"
-import { IoSettingsOutline as SettingsIcon } from "react-icons/io5";
 import { IoSearchOutline as SearchIcon } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearch } from "@/app/(notes)/state/notes.slice";
+import { setSearch } from "@/stores/notes/notes.slice";
+import { Settings } from "@/components";
+
 
 export function Header() {
     const filters = useSelector((store: RootState) => store.notes.filters)
@@ -24,7 +25,8 @@ export function Header() {
                     <Icon icon={SearchIcon}></Icon>
                     <input value={filters.search ?? ""} onInput={(e) => dispatch(setSearch(e.currentTarget.value))} className="header__input" id="search" placeholder="Search by title, content, or tags..." type="text" />
                 </label>
-                <Icon icon={SettingsIcon} />
+
+                <Settings />
             </div>
         </header>
     )

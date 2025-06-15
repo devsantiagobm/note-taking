@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import "./note.atom.scss"
-import { selectNote } from "@/app/(notes)/state/notes.slice"
-import { RootState } from "@/stores/notes.store"
+import { selectNote } from "@/stores/notes/notes.slice"
+import { RootState } from "@/stores/store"
 import { unixFormatter } from "@/utils/unix-formatter.util"
 
 interface Props {
