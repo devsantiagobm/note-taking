@@ -9,9 +9,9 @@ import { IoIosArrowForward as RightArrow } from "react-icons/io";
 import { Divider, Icon } from "@/system-design/atoms";
 import { navbarData } from "./navbar.data";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/stores/notes.store";
-import { tagsSelector } from "@/app/(notes)/state/notes.selector";
-import { setTag } from "@/app/(notes)/state/notes.slice";
+import { RootState } from "@/stores/store";
+import { tagsSelector } from "@/stores/notes/notes.selector";
+import { setTag } from "@/stores/notes/notes.slice";
 
 export function Navbar() {
     const dispatch = useDispatch()

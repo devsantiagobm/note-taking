@@ -1,4 +1,4 @@
-import { RootState } from "@/stores/notes.store";
+import { RootState } from "@/stores/store";
 import { createSelector } from "@reduxjs/toolkit";
 
 export const currentNote = (state: RootState) => state.notes.currentNote

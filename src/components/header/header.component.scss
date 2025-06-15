@@ -35,4 +35,18 @@
     &__title{
         font-size: 1.5rem;
     }
+
+    &__settings-button{
+        aspect-ratio: 1;
+        border-radius: 4px;
+        padding: 8px;
+        cursor: pointer;
+        transition: background-color .15s ease;
+
+        @media (hover:hover) {
+            &:hover{
+                background-color: var(--neutral-100);
+            }
+        }
+    }
 }

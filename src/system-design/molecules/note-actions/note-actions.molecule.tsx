@@ -1,6 +1,6 @@
-import { RootState } from "@/stores/notes.store";
+import { RootState } from "@/stores/store";
 import "./note-actions.molecule.scss"
-import { deleteNote, toggleArchiveNote } from "@/app/(notes)/state/notes.slice";
+import { deleteNote, toggleArchiveNote } from "@/stores/notes/notes.slice";
 
 import { Button, Icon } from "@/system-design/atoms"
 import { HiOutlineSaveAs as ArchivedIcon } from "react-icons/hi";

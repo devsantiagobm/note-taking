@@ -5,16 +5,16 @@ import { Button, Divider, Icon } from "@/system-design/atoms"
 import { LuTag as TagIcon } from "react-icons/lu";
 import { GoClock as ClockIcon } from "react-icons/go";
 import { useDispatch, useSelector } from "react-redux";
-import { clearCurrentNote, createNote, updateNote } from "@/app/(notes)/state/notes.slice";
+import { clearCurrentNote, createNote, updateNote } from "@/stores/notes/notes.slice";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { RootState } from "@/stores/notes.store";
+import { RootState } from "@/stores/store";
 import { useSyncForm } from "./hooks/use-sync-form";
 import { Inputs } from "./types/inputs";
-import { isCreatingNoteSelector } from "@/app/(notes)/state/notes.selector";
+import { isCreatingNoteSelector } from "@/stores/notes/notes.selector";
 import { unixFormatter } from "@/utils/unix-formatter.util";
 import { useEffect } from "react";
 import { toast } from "sonner";
-
+//TODO EL MENSAJE DE CANCELAR NO HACE NADA
 
 export function NoteDetail() {
     const dispatch = useDispatch()

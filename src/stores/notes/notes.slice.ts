@@ -1,5 +1,5 @@
 import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
-import { getNotes } from "./notes.utils";
+import { getNotes } from "@/stores/notes/notes.utils";
 
 interface Filters {
     archiveds: boolean;

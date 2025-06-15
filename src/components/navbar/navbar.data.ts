@@ -1,7 +1,7 @@
 import { BiHomeAlt as HomeIcon } from "react-icons/bi";
 import { HiOutlineSaveAs as ArchivedIcon } from "react-icons/hi";
 import { IconType } from "react-icons"
-import { setArchivedFilter } from "@/app/(notes)/state/notes.slice";
+import { setArchivedFilter } from "@/stores/notes/notes.slice";
 
 interface NavbarItem {
     name: string
