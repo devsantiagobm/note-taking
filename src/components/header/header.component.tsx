@@ -8,6 +8,8 @@ import { IoSearchOutline as SearchIcon } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearch } from "@/stores/notes/notes.slice";
 import { Settings } from "@/components";
+import { motion } from "motion/react";
+import { RiMenu3Fill as MenuIcon} from "react-icons/ri";
 
 
 export function Header() {
@@ -15,10 +17,26 @@ export function Header() {
     const title = filters.archiveds ? "Archived Notes" : "All Notes"
     const tag = filters.tag ? ` - ${filters.tag}` : ""
     const dispatch = useDispatch()
-
     return (
         <header className="header">
-            <h1 className="header__title">{title}{tag}</h1>
+
+            <div className="header__title-box">
+               
+
+                <motion.h1
+                    key={title + tag}
+                    className="header__title"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{
+                        duration: 0.3,
+                        ease: [0.25, 0.1, 0.25, 1],
+                    }}
+                >
+                    {title}{tag}
+                </motion.h1>
+            </div>
 
             <div className="header__container">
                 <label className="header__label" htmlFor="search">
@@ -27,6 +45,10 @@ export function Header() {
                 </label>
 
                 <Settings />
+
+                 <button className="header__button">
+                    <Icon icon={MenuIcon} size={24}></Icon>
+                </button>
             </div>
         </header>
     )

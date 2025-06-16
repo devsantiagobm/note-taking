@@ -4,12 +4,13 @@ import "./navbar.component.scss"
 
 import { LuTag as Tag } from "react-icons/lu";
 import { IoIosArrowForward as RightArrow } from "react-icons/io";
-import { Divider, Icon } from "@/system-design/atoms";
+import { Button, Divider, Icon } from "@/system-design/atoms";
 import { navbarData } from "./navbar.data";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import { tagsSelector } from "@/stores/notes/notes.selector";
 import { setTag } from "@/stores/notes/notes.slice";
+import { AiOutlineClose as CloseIcon } from "react-icons/ai";
 
 export function Navbar() {
     const dispatch = useDispatch()
@@ -24,6 +25,10 @@ export function Navbar() {
         <nav className="navbar">
             <picture className="navbar__picture">
                 <img src={`/logos/logo-${theme}.svg`} alt="NotesTask Logo" />
+
+                <button className="navbar__close-button">
+                    <Icon icon={CloseIcon} size={20}/>
+                </button>
             </picture>
 
             <ul className="navbar__list">
