@@ -1,5 +1,6 @@
 import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { getNotes } from "@/stores/notes/notes.utils";
+import { toast } from "sonner";
 
 interface Filters {
     archiveds: boolean;
@@ -29,7 +30,7 @@ const notesSlice = createSlice({
     reducers: {
         createNote: (state, action: PayloadAction<Omit<Note, "id" | "createdAt" | "lastEdited" | "isArchived">>) => {
             state.filters = initialState.filters
-            
+
             const now = Date.now();
             const note = {
                 ...action.payload,
@@ -51,16 +52,19 @@ const notesSlice = createSlice({
         },
         deleteNote: (state) => {
             if (!state.currentNote?.id) return;
+            toast.success("Note deleted successfully.");
             state.notes = state.notes.filter(note => note.id !== state.currentNote?.id)
             state.currentNote = null
         },
         toggleArchiveNote: (state) => {
             if (!state.currentNote?.id) return;
-            const note = state.notes.find(n => n.id === state?.currentNote?.id)            
+            const note = state.notes.find(n => n.id === state?.currentNote?.id)
 
             if (note) {
                 note.isArchived = !note.isArchived;
+                state.currentNote.isArchived = note.isArchived
                 state.filters.archiveds = note.isArchived
+                toast.success(note.isArchived ? "Note archived successfully." : "Note unarchived.");
             }
         },
         selectNote: (state, action: PayloadAction<string>) => {
@@ -77,7 +81,7 @@ const notesSlice = createSlice({
             state.filters.search = null
             state.filters.tag = action.payload
         },
-        setSearch: (state, action: PayloadAction<string>)=> {
+        setSearch: (state, action: PayloadAction<string>) => {
             state.filters.tag = null
             state.filters.search = action.payload
         }

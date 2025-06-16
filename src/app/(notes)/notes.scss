@@ -12,6 +12,7 @@
         overflow-y: auto;
 
         scrollbar-width: thin;
+        scrollbar-gutter: stable;
         scrollbar-color: var(--neutral-300) transparent;
     }
 
@@ -21,7 +22,7 @@
         gap: 12px;
         grid-area: list;
         border-right: solid 1px var(--neutral-200);
-        padding: 20px 24px;
+        padding: 20px 12px 20px 20px;
     }
 
     &__column-note {
