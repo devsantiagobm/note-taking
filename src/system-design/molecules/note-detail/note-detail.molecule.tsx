@@ -14,8 +14,7 @@ import { isCreatingNoteSelector } from "@/stores/notes/notes.selector";
 import { unixFormatter } from "@/utils/unix-formatter.util";
 import { useEffect } from "react";
 import { toast } from "sonner";
-
-//TODO EL MENSAJE DE CANCELAR NO HACE NADA, ESCONDERLO CUANDO SE ESTÁ CREANDO 
+import { AnimatePresence, motion } from "motion/react";
 
 export function NoteDetail() {
     const dispatch = useDispatch()
@@ -107,9 +106,32 @@ export function NoteDetail() {
             <Divider className="note-detail__divider" marginTop={16} marginBottom={16} />
 
             <div className="note-detail__buttons">
-                <Button variant="action" fitContent>{isCreatingNote ? "Save Note" : "Update Note"}</Button>
-                <Button variant="neutral" fitContent type="button">Cancel</Button>
+                <Button variant="action" fitContent>
+                    <AnimatePresence mode="wait" initial={false}>
+                        <motion.span
+                            key={isCreatingNote ? "save" : "update"}
+                            initial={{ opacity: 0, y: 5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -5 }}
+                            transition={{ duration: 0.2 }}
+                        >
+                            {isCreatingNote ? "Save Note" : "Update Note"}
+                        </motion.span>
+                    </AnimatePresence>
+                </Button>
+
+                <AnimatePresence>
+                    {
+                        selectedNote && (
+                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                                <Button variant="neutral" fitContent type="button" onClick={() => dispatch(clearCurrentNote())}>Cancel</Button>
+                            </motion.div>
+                        )
+                    }
+                </AnimatePresence>
+
             </div>
         </form >
     )
 }
+
