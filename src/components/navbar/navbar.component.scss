@@ -1,3 +1,6 @@
+@use "src/styles/variables.scss" as *;
+
+
 .navbar {
     flex-shrink: 0;
     grid-area: navbar;
@@ -10,8 +13,26 @@
     grid-template-columns: 1fr;
     grid-template-rows: repeat(4, auto) 1fr;
 
+    @media screen and (max-width: $breakpoint-laptop) {
+        position: fixed;
+        background-color: var(--neutral-0);
+        z-index: 10;
+        width: clamp(300px, 30dvw, 500px);
+        right: 0;
+        transform: translateX(100%);
+        border-left: 1px solid var(--neutral-200);
+        transition: transform .5s ease;
+
+        &--open{
+            transform: translateX(0%);
+        }
+    }
+
     &__picture {
         margin: 0 0 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
     &__list {
@@ -78,8 +99,6 @@
         white-space: nowrap;
     }
 
-
-
     &__link-arrow {
         position: absolute;
         top: 50%;
@@ -93,5 +112,24 @@
         font-size: .9rem;
         margin: 0 0 10px;
         color: var(--neutral-400);
+    }
+
+    &__close-button {
+        aspect-ratio: 1;
+        border-radius: 4px;
+        padding: 8px;
+        cursor: pointer;
+        transition: background-color .15s ease;
+        display: none;
+
+        @media (hover:hover) {
+            &:hover {
+                background-color: var(--neutral-100);
+            }
+        }
+
+        @media screen and (max-width: $breakpoint-laptop) {
+            display: block;
+        }
     }
 }

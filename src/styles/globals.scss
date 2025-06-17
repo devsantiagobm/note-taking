@@ -1,4 +1,6 @@
 @use "src/styles/mixins/transition.scss" as *;
+@use "src/styles/variables.scss" as *;
+
 
 :root {
     --blue-700: #2547D0;
@@ -68,6 +70,12 @@ html.font-source {
     grid-template-columns: 1fr repeat(4, 1fr);
     grid-template-areas: "navbar main main main main";
     @include theme-transition();
+
+
+    @media screen and (max-width: $breakpoint-laptop) {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-areas: "main main main main";
+    }
 }
 
 .main {

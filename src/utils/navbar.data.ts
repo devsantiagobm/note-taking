@@ -1,5 +1,5 @@
 import { BiHomeAlt as HomeIcon } from "react-icons/bi";
-import { HiOutlineSaveAs as ArchivedIcon } from "react-icons/hi";
+import { MdOutlineArchive as ArchivedIcon} from "react-icons/md";
 import { IconType } from "react-icons"
 import { setArchivedFilter } from "@/stores/notes/notes.slice";
 

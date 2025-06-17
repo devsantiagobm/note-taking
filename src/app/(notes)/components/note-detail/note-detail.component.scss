@@ -1,7 +1,67 @@
+@use "src/styles/variables.scss" as *;
+
+
 .note-detail {
+    @media screen and (max-width: $breakpoint-tablet) {
+        background-color: var(--neutral-0);
+        position: fixed;
+        z-index: 2;
+        padding: 0px clamp(20px, 5dvw, 32px);
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: calc(100dvh - 34px - 26px);
+        transform: translateX(100%);
+        transition: transform .5s ease;
+
+        &--open {
+            transform: translateX(0%);
+        }
+    }
 
     &__input-label {
         margin: 0 0 16px;
+    }
+
+
+    &__top {
+        padding: 8px 0 16px;
+        border-bottom: solid 1px var(--neutral-400);
+        margin: 0 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        @media screen and (min-width: calc($breakpoint-tablet + 1px)) {
+            display: none;
+        }
+    }
+
+    &__top-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    &__action {
+        color: var(--neutral-400);
+        font-size: .9rem;
+        font-weight: var(--font-weight-medium);
+        cursor: pointer;
+
+        &--main {
+            color: var(--blue-500);
+
+        }
+    }
+
+    &__back {
+        display: flex;
+        align-items: center;
+        color: var(--neutral-400);
+        font-size: .85rem;
+        cursor: pointer;
+        font-weight: var(--font-weight-medium);
     }
 
     &__input {
@@ -52,6 +112,10 @@
             &::placeholder {
                 font-size: 1rem;
             }
+
+            @media screen and (max-width: $breakpoint-laptop) {
+                min-height: 25dvh;
+            }
         }
 
         &--error {
@@ -79,6 +143,10 @@
         align-items: center;
         color: var(--neutral-500);
         font-size: .9rem;
+
+        &-text {
+            text-wrap: nowrap;
+        }
     }
 
     &__last-edited-value {
@@ -90,10 +158,21 @@
     &__divider {
         width: calc(100% - 16px);
         margin-inline: auto;
+
+
+        &--bottom {
+            @media screen and (max-width: $breakpoint-tablet) {
+                display: none;
+            }
+        }
     }
 
     &__buttons {
         display: flex;
         gap: 8px;
+
+        @media screen and (max-width: $breakpoint-tablet) {
+            display: none;
+        }
     }
 }

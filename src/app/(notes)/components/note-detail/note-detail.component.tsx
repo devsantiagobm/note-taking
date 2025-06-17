@@ -1,25 +1,29 @@
 "use client";
 
-import "./note-detail.molecule.scss"
+import "./note-detail.component.scss"
 import { Button, Divider, Icon } from "@/system-design/atoms"
 import { LuTag as TagIcon } from "react-icons/lu";
 import { GoClock as ClockIcon } from "react-icons/go";
 import { useDispatch, useSelector } from "react-redux";
-import { clearCurrentNote, createNote, updateNote } from "@/stores/notes/notes.slice";
+import { clearCurrentNote, createNote, setModal, updateNote } from "@/stores/notes/notes.slice";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { RootState } from "@/stores/store";
 import { useSyncForm } from "./hooks/use-sync-form";
 import { Inputs } from "./types/inputs";
 import { isCreatingNoteSelector } from "@/stores/notes/notes.selector";
 import { unixFormatter } from "@/utils/unix-formatter.util";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { toast } from "sonner";
 import { AnimatePresence, motion } from "motion/react";
+import { IoIosArrowBack as BackIcon } from "react-icons/io";
+import { MdOutlineArchive as ArchivedIcon } from "react-icons/md";
+import { TbTrash as DeleteIcon } from "react-icons/tb";
+
 
 export function NoteDetail() {
     const dispatch = useDispatch()
-    const selectedNote = useSelector((store: RootState) => store.notes.currentNote)
-    const isCreatingNote = useSelector(isCreatingNoteSelector)
+    const { selectedNote, isCreatingNote } = useSelector((store: RootState) => ({ selectedNote: store.notes.currentNote, isCreatingNote: store.notes.isCreatingNote }))
+    const isCreation = useSelector(isCreatingNoteSelector)
     const { handleSubmit, register, formState: { errors }, reset, } = useForm<Inputs>()
     useSyncForm({ reset, selectedNote })
     const lastEdited = unixFormatter(selectedNote?.lastEdited ? new Date(selectedNote.lastEdited) : null)
@@ -27,17 +31,17 @@ export function NoteDetail() {
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         const tags = data.tags.split(",").map(tag => tag.trim()).filter(tag => tag !== "");
 
-        if (isCreatingNote) {
+        if (isCreation) {
             dispatch(createNote({ ...data, tags }));
             toast.success("Note created successfully!");
         }
 
-        if (!isCreatingNote && selectedNote) {
+        if (!isCreation && selectedNote) {
             dispatch(updateNote({ ...data, tags, id: selectedNote.id }));
             toast.success("Note updated successfully!");
         }
 
-        dispatch(clearCurrentNote())
+        dispatch(clearCurrentNote({ isCreatingNote: false }))
         reset()
 
     }
@@ -50,7 +54,31 @@ export function NoteDetail() {
 
 
     return (
-        <form className="note-detail" onSubmit={handleSubmit(onSubmit)}>
+        <form className={`note-detail ${(selectedNote || isCreatingNote) && "note-detail--open"}`} onSubmit={handleSubmit(onSubmit)}>
+
+            <section className="note-detail__top">
+                <button className="note-detail__back" type="button" onClick={() => dispatch(clearCurrentNote({ isCreatingNote: false }))}>
+                    <BackIcon size={20} />
+                    Go Back
+                </button>
+
+                <div className="note-detail__top-content">
+                    {
+                        !isCreation && <Fragment>
+                            <button type="button" className="note-detail__action" onClick={() => dispatch(setModal("delete"))}>
+                                <DeleteIcon size={20} />
+                            </button>
+                            <button type="button" className="note-detail__action" onClick={() => dispatch(setModal("archive"))}>
+                                <ArchivedIcon size={20} />
+                            </button>
+                        </Fragment>
+                    }
+                    <button className="note-detail__action note-detail__action--main">
+                        {isCreation ? "Save Note" : "Update Note"}
+                    </button>
+                </div>
+            </section>
+
             <label className="note-detail__input-label">
                 <textarea className={`note-detail__input ${errors.title && "note-detail__input--error"}`} placeholder="Enter a title..." spellCheck="false" {...register("title", { required: true })} />
             </label>
@@ -103,19 +131,19 @@ export function NoteDetail() {
                 />
             </label>
 
-            <Divider className="note-detail__divider" marginTop={16} marginBottom={16} />
+            <Divider className="note-detail__divider note-detail__divider--bottom" marginTop={16} marginBottom={16} />
 
             <div className="note-detail__buttons">
                 <Button variant="action" fitContent>
                     <AnimatePresence mode="wait" initial={false}>
                         <motion.span
-                            key={isCreatingNote ? "save" : "update"}
+                            key={isCreation ? "save" : "update"}
                             initial={{ opacity: 0, y: 5 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -5 }}
                             transition={{ duration: 0.2 }}
                         >
-                            {isCreatingNote ? "Save Note" : "Update Note"}
+                            {isCreation ? "Save Note" : "Update Note"}
                         </motion.span>
                     </AnimatePresence>
                 </Button>
@@ -124,7 +152,7 @@ export function NoteDetail() {
                     {
                         selectedNote && (
                             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                                <Button variant="neutral" fitContent type="button" onClick={() => dispatch(clearCurrentNote())}>Cancel</Button>
+                                <Button variant="neutral" fitContent type="button" onClick={() => dispatch(clearCurrentNote({ isCreatingNote: false }))}>Cancel</Button>
                             </motion.div>
                         )
                     }

@@ -1,17 +1,24 @@
-.header{
+@use "src/styles/variables.scss" as *;
+
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     padding: 1.15rem 1.75rem;
-    border-bottom:1px solid var(--neutral-200) ;
+    border-bottom: 1px solid var(--neutral-200);
 
-    &__container{
+    @media screen and (max-width: $breakpoint-tablet) {
+        display: none;
+        background-color: red;
+    }
+
+    &__container {
         display: flex;
         gap: 16px;
     }
 
-    &__label{ 
+    &__label {
         display: flex;
         gap: 8px;
         align-items: center;
@@ -23,30 +30,49 @@
         font-size: .8rem;
         transition: border-color .15s ease;
 
-        &:focus-within{
-            border-color:var(--neutral-400);
+        &:focus-within {
+            border-color: var(--neutral-400);
         }
     }
 
-    &__input{
+    &__input {
         width: 100%;
     }
 
-    &__title{
+    &__title {
         font-size: 1.5rem;
     }
 
-    &__settings-button{
+    &__title-box {
+        display: flex;
+        align-items: center;
+        gap: px;
+    }
+
+    &__button {
         aspect-ratio: 1;
         border-radius: 4px;
         padding: 8px;
         cursor: pointer;
         transition: background-color .15s ease;
+        display: none;
 
         @media (hover:hover) {
-            &:hover{
+            &:hover {
                 background-color: var(--neutral-100);
             }
         }
+
+        @media screen and (max-width: $breakpoint-laptop) {
+            display: block;
+        }
+
     }
+
+    &__buttons {
+        display: flex;
+        align-items: center;
+    }
+
+
 }

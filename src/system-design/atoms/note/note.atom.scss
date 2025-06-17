@@ -1,4 +1,5 @@
 @use "src/styles/mixins/transition.scss" as *;
+@use "src/styles/variables.scss" as *;
 
 .note {
     padding: 12px;
@@ -8,18 +9,22 @@
     position: relative;
     @include theme-transition();
 
-    &--active{
+    @media screen and (max-width: $breakpoint-tablet) {
+        background-color: var(--neutral-50);
+    }
+
+    &--active {
         background-color: var(--neutral-100);
     }
 
-    
+
     @media (hover:hover) {
         &:hover {
             background-color: var(--neutral-100);
         }
     }
 
-    &::before{
+    &::before {
         content: "";
         position: absolute;
         width: calc(100% - 12px);
@@ -50,7 +55,7 @@
         border-radius: 4px;
     }
 
-    &__date{
+    &__date {
         font-size: .7rem;
         color: var(--neutral-500);
     }

@@ -4,27 +4,35 @@ import "./navbar.component.scss"
 
 import { LuTag as Tag } from "react-icons/lu";
 import { IoIosArrowForward as RightArrow } from "react-icons/io";
-import { Divider, Icon } from "@/system-design/atoms";
-import { navbarData } from "./navbar.data";
+import { Button, Divider, Icon } from "@/system-design/atoms";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import { tagsSelector } from "@/stores/notes/notes.selector";
 import { setTag } from "@/stores/notes/notes.slice";
 import { AnimatePresence, motion } from "motion/react";
+import { AiOutlineClose as CloseIcon } from "react-icons/ai";
+import { toggleMenu } from "@/stores/responsive/responsive.slice";
+import { navbarData } from "@/utils/navbar.data";
+
 
 export function Navbar() {
     const dispatch = useDispatch()
-    const { filters, theme } = useSelector((state: RootState) => ({
+    const { filters, theme, isMenuOpen } = useSelector((state: RootState) => ({
         filters: state.notes.filters,
         theme: state.settings.theme,
+        isMenuOpen: state.responsive.isMenuOpen
     }));
     const tags = useSelector(tagsSelector)
 
 
     return (
-        <nav className="navbar">
+        <nav className={`navbar ${isMenuOpen && "navbar--open"}`}>
             <picture className="navbar__picture">
                 <img src={`/logos/logo-${theme}.svg`} alt="NotesTask Logo" />
+
+                <button className="navbar__close-button" onClick={() => dispatch(toggleMenu())}>
+                    <Icon icon={CloseIcon} size={20}/>
+                </button>
             </picture>
 
             <ul className="navbar__list">

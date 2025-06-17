@@ -1,5 +1,4 @@
 import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
-import { getNotes } from "@/stores/notes/notes.utils";
 import { toast } from "sonner";
 
 interface Filters {
@@ -8,26 +7,42 @@ interface Filters {
     search: string | null;
 }
 
+export type ModalKey = "archive" | "delete" | null;
+
+
 export interface NotesState {
     notes: Note[];
     currentNote: Note | null;
     filters: Filters;
+    isCreatingNote: boolean;
+    modal: ModalKey;
 }
 
 const initialState: NotesState = {
-    notes: getNotes(),
+    notes: [],
     currentNote: null,
     filters: {
         archiveds: false,
         tag: null,
         search: null
-    }
+    },
+    isCreatingNote: false,
+    modal: null
 }
 
 const notesSlice = createSlice({
     name: "notes",
     initialState,
     reducers: {
+        getNotes(state) {
+            try {
+                const notes = localStorage.getItem("notes")
+                console.log({ notes });
+                state.notes = notes ? JSON.parse(notes) : []
+            } catch (error) {
+                state.notes = []
+            }
+        },
         createNote: (state, action: PayloadAction<Omit<Note, "id" | "createdAt" | "lastEdited" | "isArchived">>) => {
             state.filters = initialState.filters
 
@@ -71,8 +86,9 @@ const notesSlice = createSlice({
             const currentNote = state.notes.find(note => note.id === action.payload)
             if (currentNote) state.currentNote = currentNote
         },
-        clearCurrentNote: (state) => {
+        clearCurrentNote: (state, action: PayloadAction<{ isCreatingNote: boolean }>) => {
             state.currentNote = null
+            state.isCreatingNote = action.payload.isCreatingNote
         },
         setArchivedFilter: (state, action: PayloadAction<boolean>) => {
             state.filters.archiveds = action.payload;
@@ -84,9 +100,12 @@ const notesSlice = createSlice({
         setSearch: (state, action: PayloadAction<string>) => {
             state.filters.tag = null
             state.filters.search = action.payload
-        }
+        },
+        setModal: (state, action: PayloadAction<ModalKey>) => {
+            state.modal = action.payload
+        },
     }
 })
 
-export const { setSearch, setTag, createNote, selectNote, clearCurrentNote, updateNote, deleteNote, toggleArchiveNote, setArchivedFilter } = notesSlice.actions
+export const { setSearch, setTag, createNote, selectNote, clearCurrentNote, updateNote, deleteNote, toggleArchiveNote, setArchivedFilter, setModal, getNotes } = notesSlice.actions
 export const notesReducer = notesSlice.reducer

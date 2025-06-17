@@ -1,9 +1,27 @@
+@use "src/styles/variables.scss" as *;
+
+
+
 .notes {
     overflow-y: auto;
     display: grid;
     max-height: 100%;
     grid-template-columns: 1fr repeat(2, 1fr) .9fr;
     grid-template-areas: "list note note actions";
+
+    @media screen and (max-width: $breakpoint-laptop) {
+        grid-template-areas:
+            "list note"
+            "list actions";
+
+        grid-template-columns: .6fr 1fr;
+        grid-template-rows: 1fr auto;
+    }
+
+    @media screen and (max-width: $breakpoint-tablet) {
+        grid-template-columns: 1fr;
+        grid-template-areas: "list";
+    }
 
     &__column-list,
     &__column-note,
@@ -23,16 +41,75 @@
         grid-area: list;
         border-right: solid 1px var(--neutral-200);
         padding: 20px 12px 20px 20px;
+
+
+        @media screen and (max-width: $breakpoint-tablet) {
+            border: none;
+        }
+    }
+
+    &__create-button {
+        @media screen and (max-width: $breakpoint-tablet) {
+            position: fixed;
+            z-index: 1;
+            aspect-ratio: 1;
+            max-width: fit-content;
+            bottom: 24px;
+            border-radius: 50;
+            right: 20px;
+            box-shadow: var(--neutral-400) 0px 4px 20px -4px;
+        }
+    }
+
+    &__create-button-text {
+        @media screen and (max-width: $breakpoint-tablet) {
+            display: none;
+        }
+    }
+
+    &__create-button-icon {
+        font-size: 12px;
+
+        @media screen and (max-width: $breakpoint-tablet) {
+            font-size: 20px;
+        }
+    }
+
+
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        @media screen and (max-width: $breakpoint-tablet) {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200, 1fr));
+        }
     }
 
     &__column-note {
         grid-area: note;
         padding: 20px 16px;
+
+        @media screen and (max-width: $breakpoint-tablet) {
+            padding: 0;
+        }
     }
 
     &__column-actions {
-        padding: 20px 24px;
+        padding: 20px 20px;
         grid-area: actions;
         border-left: solid 1px var(--neutral-200);
+
+
+        @media screen and (max-width: $breakpoint-laptop) {
+            border-left: none;
+            padding: 20px 16px;
+        }
+
+        @media screen and (max-width: $breakpoint-tablet) {
+            display: none;
+        }
     }
 }
