@@ -28,24 +28,10 @@ const settingsSlice = createSlice({
             document.documentElement.classList.remove("font-inter", "font-noto", "font-source");
             document.documentElement.classList.add(`font-${action.payload}`);
             Cookies.set("font", state.font, { expires: 365 });
-        },
-        initSettings(state) {
-            const savedTheme = localStorage.getItem("theme") as ThemeMode;
-            const savedFont = localStorage.getItem("font") as FontFamily;
-
-            if (savedTheme) {
-                state.theme = savedTheme;
-                document.documentElement.setAttribute("data-theme", savedTheme);
-            }
-
-            if (savedFont) {
-                state.font = savedFont;
-                document.documentElement.style.setProperty("--app-font", savedFont);
-            }
         }
     },
 });
 
-export const { setTheme, setFont, initSettings } = settingsSlice.actions;
+export const { setTheme, setFont } = settingsSlice.actions;
 
 export const settingsReducer = settingsSlice.reducer;

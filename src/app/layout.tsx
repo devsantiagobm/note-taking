@@ -5,7 +5,7 @@ import "@/styles/reset.scss";
 import "@/styles/globals.scss";
 
 import { ReduxProvider } from "@/providers";
-import { Header, Navbar } from "@/components";
+import { Header, MobileHeader, Navbar } from "@/components";
 import { Toaster } from "sonner";
 import { cookies } from "next/headers";
 
@@ -48,6 +48,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                         <Navbar />
                         <main className="main">
                             <Header />
+                            <MobileHeader />
                             {children}
                         </main>
                     </div>

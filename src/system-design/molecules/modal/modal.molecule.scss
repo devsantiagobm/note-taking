@@ -2,6 +2,7 @@
 
 .modal {
     position: fixed;
+    z-index: 10;
     inset: 0;
     display: grid;
     place-items: center;
@@ -45,6 +46,7 @@
         background-color: var(--neutral-50);
         @include theme-transition();
     }
+
 
     &__buttons {
         display: flex;

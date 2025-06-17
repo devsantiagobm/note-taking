@@ -16,10 +16,16 @@
     @media screen and (max-width: $breakpoint-laptop) {
         position: fixed;
         background-color: var(--neutral-0);
-        z-index: 1;
+        z-index: 10;
         width: clamp(300px, 30dvw, 500px);
         right: 0;
+        transform: translateX(100%);
         border-left: 1px solid var(--neutral-200);
+        transition: transform .5s ease;
+
+        &--open{
+            transform: translateX(0%);
+        }
     }
 
     &__picture {
@@ -92,8 +98,6 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-
-
 
     &__link-arrow {
         position: absolute;

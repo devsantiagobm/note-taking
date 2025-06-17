@@ -18,6 +18,7 @@
 
     &__overlay {
         position: fixed;
+        z-index: 10;
         inset: 0;
         background-color: rgba(0, 0, 0, 0.4);
         backdrop-filter: blur(4px);
@@ -32,6 +33,7 @@
         border-top-right-radius: 16px;
         margin-top: 6rem;
         position: fixed;
+        z-index: 10;
         bottom: 0;
         left: 0;
         right: 0;

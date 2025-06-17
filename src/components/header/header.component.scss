@@ -8,6 +8,11 @@
     padding: 1.15rem 1.75rem;
     border-bottom: 1px solid var(--neutral-200);
 
+    @media screen and (max-width: $breakpoint-tablet) {
+        display: none;
+        background-color: red;
+    }
+
     &__container {
         display: flex;
         gap: 16px;
@@ -63,4 +68,11 @@
         }
 
     }
+
+    &__buttons {
+        display: flex;
+        align-items: center;
+    }
+
+
 }

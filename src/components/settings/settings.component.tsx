@@ -2,7 +2,8 @@
 
 import './settings.component.scss';
 import { Icon } from '@/system-design/atoms';
-import { IoSettingsOutline as SettingsIcon } from "react-icons/io5";
+// import { IoSettingsOutline as SettingsIcon } from "react-icons/io5";
+import { FiSettings as SettingsIcon} from "react-icons/fi";
 import { Drawer } from 'vaul';
 import { fontOptions, themeOptions } from './settings.data';
 import { useDispatch, useSelector } from 'react-redux';

@@ -11,10 +11,10 @@ interface Props  {
 
 export function Button({ children, variant = "action", alignment = "left", fitContent = false, ...props }: Props & ComponentPropsWithoutRef<"button">) {
 
-    const className = `button button--${variant} button--${alignment} ${fitContent && "button--fit-content"}`
+    const className = `button button--${variant} button--${alignment} ${fitContent && "button--fit-content"} ${props.className}`
     
     return (
-        <button className={className} {...props}>
+        <button {...props} className={className} >
             {children}
         </button>
     )
